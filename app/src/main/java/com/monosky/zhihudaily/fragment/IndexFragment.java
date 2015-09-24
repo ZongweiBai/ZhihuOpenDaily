@@ -123,6 +123,11 @@ public class IndexFragment extends Fragment {
                     imageUrlList.add(storyData.getImage());
                 }
                 new ImageDownLoadTask(getActivity(), imageUrlList, null).saveImageToSd();
+
+                // 如果获取的今日热闻数量小于8，继续获取
+                if(firstStoriesNum <= 8) {
+                    getBeforeDatas();
+                }
             }
 
             @Override

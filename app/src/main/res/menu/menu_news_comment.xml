@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.monosky.zhihudaily.activity.NewsCommentActivity">
+    <item
+        android:id="@+id/action_comment_write"
+        android:icon="@mipmap/comment_write"
+        android:orderInCategory="100"
+        android:title="@string/action_reply"
+        app:showAsAction="always" />
+</menu>

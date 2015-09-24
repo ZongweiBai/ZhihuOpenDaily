@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- toolbar（actionbar）颜色 -->
+        <item name="colorPrimary">@color/primary_color</item>
+        <!-- 状态栏颜色 -->
+        <item name="colorPrimaryDark">@color/primary_dark_color</item>
+        <!-- 窗口的背景颜色 -->
+        <item name="android:windowBackground">@android:color/white</item>
+        <!-- 字体大小 -->
+        <item name="android:titleTextAppearance">@style/ToolbarTitleAppearance</item>
+    </style>
+</resources>

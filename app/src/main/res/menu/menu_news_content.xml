@@ -1,0 +1,29 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.monosky.zhihudaily.activity.NewsContentActivity">
+
+    <item
+        android:id="@+id/action_share"
+        android:icon="@mipmap/share"
+        android:title="@string/action_share"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_favorite"
+        android:icon="@mipmap/collect"
+        android:title="@string/action_favorite"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_reply"
+        android:icon="@mipmap/comment"
+        android:title="@string/action_reply"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_praise"
+        android:icon="@mipmap/praise"
+        android:title="@string/action_praise"
+        app:showAsAction="always" />
+</menu>

@@ -1,0 +1,84 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.monosky.zhihudaily.activity.NewsContentActivity">
+
+    <com.monosky.zhihudaily.widget.observableScrollView.ObservableScrollView
+        android:id="@+id/news_content_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:scrollbars="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/news_toolbar_divider"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/activity_toolbar_height" />
+
+            <RelativeLayout
+                android:id="@+id/news_image_layout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/parallax_image_height"
+                android:layout_below="@id/news_toolbar_divider"
+                android:background="@drawable/banner_shadow">
+
+                <ImageView
+                    android:id="@+id/news_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:id="@+id/news_image_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="32dp"
+                    android:layout_marginLeft="@dimen/activity_vertical_margin"
+                    android:layout_marginRight="@dimen/activity_vertical_margin"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_22" />
+
+                <TextView
+                    android:id="@+id/news_image_source"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/app_name"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_12" />
+            </RelativeLayout>
+
+            <View
+                android:id="@+id/news_anchor"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/parallax_image_height"
+                android:layout_below="@id/news_toolbar_divider"
+                android:minHeight="@dimen/parallax_image_height" />
+
+            <WebView
+                android:id="@+id/news_body"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/news_anchor" />
+        </RelativeLayout>
+    </com.monosky.zhihudaily.widget.observableScrollView.ObservableScrollView>
+
+    <android.support.v7.widget.Toolbar xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/news_content_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_toolbar_height"
+        android:background="@color/primary_color"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/Toolbar" />
+</FrameLayout>

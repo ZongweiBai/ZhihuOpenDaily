@@ -1,0 +1,20 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_main_color"
+    tools:context="com.monosky.zhihudaily.fragment.IndexFragment">
+
+    <com.monosky.zhihudaily.widget.swipyRefreshLayout.SwipyRefreshLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/app_index_swipy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:direction="both">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/app_index_recycleview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.monosky.zhihudaily.widget.swipyRefreshLayout.SwipyRefreshLayout>
+</FrameLayout>

@@ -1,0 +1,20 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.monosky.zhihudaily.activity.SectionActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/section_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_toolbar_height"
+        android:background="@color/primary_color" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/section_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

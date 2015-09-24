@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/app_main_color"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/index_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_widget_height"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:text="@string/app_name"
+        android:textColor="@color/secondary_text"
+        android:textSize="@dimen/text_size_14" />
+
+    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/index_item_cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_small_divide"
+        android:layout_marginLeft="@dimen/activity_common_divide"
+        android:layout_marginRight="@dimen/activity_common_divide"
+        android:clickable="true"
+        android:elevation="1dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        card_view:cardBackgroundColor="@color/white"
+        card_view:cardCornerRadius="2dp"
+        card_view:cardElevation="1dp"
+        card_view:contentPaddingBottom="@dimen/activity_common_divide"
+        card_view:contentPaddingLeft="@dimen/activity_vertical_margin"
+        card_view:contentPaddingRight="@dimen/activity_vertical_margin"
+        card_view:contentPaddingTop="@dimen/activity_common_divide">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp">
+
+                <ImageView
+                    android:id="@+id/index_item_cardview_img"
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/ic_logo" />
+
+                <ImageView
+                    android:id="@+id/index_item_cardview_multiimg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginBottom="@dimen/activity_small_divide"
+                    android:src="@mipmap/home_pic" />
+
+                <TextView
+                    android:id="@+id/index_item_cardview_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/activity_small_divide"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/activity_small_divide"
+                    android:layout_toLeftOf="@id/index_item_cardview_img"
+                    android:text="@string/app_name"
+                    android:textColor="@color/primary_text"
+                    android:textSize="@dimen/text_size_18" />
+
+                <TextView
+                    android:id="@+id/index_item_cardview_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="@dimen/activity_small_divide"
+                    android:text="@string/app_name"
+                    android:textColor="@color/divider_color"
+                    android:textSize="@dimen/text_size_12"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/index_item_cardview_theme_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/activity_common_divide"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/app_main_color" />
+
+                <TextView
+                    android:id="@+id/index_item_cardview_theme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/home_arrow"
+                    android:paddingBottom="@dimen/activity_small_divide"
+                    android:paddingTop="@dimen/activity_large_divide"
+                    android:text="@string/app_name"
+                    android:textColor="@color/secondary_text"
+                    android:textSize="@dimen/text_size_12" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <View
+        android:id="@+id/index_item_divide"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_small_divide" />
+</LinearLayout>

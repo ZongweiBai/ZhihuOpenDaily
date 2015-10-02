@@ -20,4 +20,5 @@ public class ConstData implements Serializable {
     public static String LOADING_IMAGE = "LOADING_IMAGE";
     public static String LOADING_TEXT = "LOADING_TEXT";
     public static String THEMES_DATA = "THEMES_DATA";
+    public static String THEME_LIKE = "THEME_LIKE";
 }

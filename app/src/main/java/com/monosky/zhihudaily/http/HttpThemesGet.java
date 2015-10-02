@@ -17,15 +17,19 @@ import java.util.List;
  */
 public class HttpThemesGet {
 
-    private List<ThemeData> themesDatas;
+    private List<ThemeData> themeDatas;
 
     public void startThemsDatasTask() {
         IRequest.get(BaseApplication.getContext(), APIConstData.THEMES, new RequestListener() {
             @Override
             public void requestSuccess(String json) {
-                themesDatas = JsonParseUtils.getThemeDatas(json);
-                if (themesDatas != null && !themesDatas.isEmpty()) {
-                    BaseApplication.themesDatas = themesDatas;
+                themeDatas = JsonParseUtils.getThemeDatas(json);
+                if (themeDatas != null && !themeDatas.isEmpty()) {
+                    BaseApplication.themesDatas = themeDatas;
+                    BaseApplication.themeDataMap.clear();
+                    for (ThemeData themeData: themeDatas) {
+                        BaseApplication.themeDataMap.put(themeData.getThemeId(), themeData);
+                    }
                 }
                 SPUtils.put(ConstData.THEMES_DATA, json);
             }

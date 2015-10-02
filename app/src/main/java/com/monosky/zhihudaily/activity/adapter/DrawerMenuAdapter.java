@@ -1,8 +1,8 @@
 package com.monosky.zhihudaily.activity.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,9 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.monosky.zhihudaily.BaseApplication;
 import com.monosky.zhihudaily.R;
 import com.monosky.zhihudaily.module.ThemeData;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,13 +25,35 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
 
     private Context mContext;
     private List<ThemeData> themeDatas;
+    private List<String> themeLikes;
+    private String mCurrentThemeId = "-1";
     private View.OnClickListener onClickListener;
     private OnDrawerItemClickListener onDrawerItemClickListener;
 
-    public DrawerMenuAdapter(Context context, List<ThemeData> themeDatas) {
+    public DrawerMenuAdapter(Context context, List<ThemeData> themeDatas, List<String> themeLikes) {
         this.mContext = context;
         this.themeDatas = themeDatas;
+        this.themeLikes = themeLikes;
         this.onClickListener = onMyClickListener;
+        resetData();
+    }
+
+    /**
+     * 对数据进行处理
+     */
+    private void resetData() {
+        if (themeLikes != null && !themeLikes.isEmpty()) {
+            ThemeData theme = null;
+            for (int i = themeLikes.size() - 1; i >= 0; i--) {
+                for (Iterator<ThemeData> iterator = themeDatas.iterator(); iterator.hasNext();) {
+                    theme = iterator.next();
+                    if (theme.getThemeId().equals(themeLikes.get(i))) {
+                        iterator.remove();
+                    }
+                }
+                themeDatas.add(0, BaseApplication.themeDataMap.get(themeLikes.get(i)));
+            }
+        }
     }
 
     @Override
@@ -45,7 +69,7 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         // 绑定数据到ViewHolder上
         ThemeData themeData = themeDatas.get(position);
-        if(position == 0) {
+        if (position == 0) {
             holder.mTopLayout.setVisibility(View.VISIBLE);
             holder.mMiddleLayout.setVisibility(View.VISIBLE);
 
@@ -53,6 +77,11 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
             holder.mTopFavorites.setOnClickListener(onClickListener);
             holder.mTopDownload.setOnClickListener(onClickListener);
             holder.mMiddleLayout.setOnClickListener(onClickListener);
+            if(mCurrentThemeId.equals("-1")) {
+                holder.mMiddleLayout.setBackgroundColor(mContext.getResources().getColor(R.color.app_main_color));
+            } else {
+                holder.mMiddleLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            }
         } else {
             holder.mTopLayout.setVisibility(View.GONE);
             holder.mMiddleLayout.setVisibility(View.GONE);
@@ -61,6 +90,18 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
         holder.mBottomLayout.setOnClickListener(onClickListener);
         holder.mBottonImgLayout.setTag(position);
         holder.mBottonImgLayout.setOnClickListener(onClickListener);
+        if(BaseApplication.themeLikes.contains(themeData.getThemeId())) {
+            holder.mBottomImg.setImageResource(R.mipmap.menu_arrow);
+        } else {
+            holder.mBottomImg.setImageResource(R.mipmap.menu_follow);
+        }
+        if(!mCurrentThemeId.equals("-1")) {
+            if(themeData.getThemeId().equals(mCurrentThemeId)) {
+                holder.mBottomLayout.setBackgroundColor(mContext.getResources().getColor(R.color.app_main_color));
+            } else {
+                holder.mBottomLayout.setBackgroundColor(mContext.getResources().getColor(R.color.white));
+            }
+        }
         holder.mBottonTitle.setText(themeData.getThemeName());
     }
 
@@ -97,9 +138,9 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
     View.OnClickListener onMyClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            if(onDrawerItemClickListener != null) {
+            if (onDrawerItemClickListener != null) {
                 ThemeData themeData = null;
-                if(v.getTag() != null) {
+                if (v.getTag() != null) {
                     try {
                         int pos = Integer.parseInt(String.valueOf(v.getTag()));
                         themeData = themeDatas.get(pos);
@@ -114,7 +155,7 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
 
     @Override
     public int getItemCount() {
-        if(themeDatas==null || themeDatas.isEmpty()) {
+        if (themeDatas == null || themeDatas.isEmpty()) {
             return 0;
         }
         return themeDatas.size();
@@ -126,5 +167,26 @@ public class DrawerMenuAdapter extends RecyclerView.Adapter<DrawerMenuAdapter.Vi
 
     public void setItemClickListner(OnDrawerItemClickListener listner) {
         this.onDrawerItemClickListener = listner;
+    }
+
+    /**
+     * 刷新adapter
+     * @param currentThemeId
+     */
+    public void refreshAdapter(String currentThemeId) {
+        this.mCurrentThemeId = currentThemeId;
+        this.notifyDataSetChanged();
+    }
+
+    /**
+     * 刷新adapter
+     * @param themeDataList
+     * @param themeLikes
+     */
+    public void refreshAdapter(List<ThemeData> themeDataList, List<String> themeLikes) {
+        this.themeDatas = themeDataList;
+        this.themeLikes = themeLikes;
+        resetData();
+        this.notifyDataSetChanged();
     }
 }

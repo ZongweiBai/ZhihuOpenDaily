@@ -18,9 +18,11 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.monosky.zhihudaily.R;
 import com.monosky.zhihudaily.module.CommentData;
 import com.monosky.zhihudaily.util.DateUtils;
+import com.monosky.zhihudaily.util.DensityUtils;
 import com.monosky.zhihudaily.util.ImageFileUtil;
 import com.monosky.zhihudaily.util.ImageLoaderOption;
 import com.monosky.zhihudaily.util.LogUtils;
+import com.monosky.zhihudaily.util.ScreenUtils;
 import com.monosky.zhihudaily.util.ToastUtils;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -127,6 +129,9 @@ public class NewsCommentAdapter extends RecyclerView.Adapter<NewsCommentAdapter.
             if (position == 0) {
                 holder.mLongEmptyLayout.setVisibility(View.VISIBLE);
                 holder.mLongTitleEmptyLayout.setVisibility(View.VISIBLE);
+                RelativeLayout.LayoutParams longEmptyTipParams = (RelativeLayout.LayoutParams) holder.mLongEmptyTip.getLayoutParams();
+                longEmptyTipParams.height = (ScreenUtils.getScreenHeight(mContext) - 750);
+                holder.mLongEmptyTip.setLayoutParams(longEmptyTipParams);
                 holder.mLongEmptyTip.setVisibility(View.VISIBLE);
                 holder.mCommentLayout.setVisibility(View.GONE);
                 holder.mLongEmptyTitle.setText(mContext.getResources().getString(R.string.long_comment_title, mLongCommentNum));

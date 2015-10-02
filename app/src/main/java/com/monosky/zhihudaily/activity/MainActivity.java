@@ -53,6 +53,7 @@ public class MainActivity extends BaseActivity {
     private List<Fragment> mFragmentList = new ArrayList<>();
     private Fragment mCurrentFragment;
     private ThemeData mCurrentTheme;
+    private StringBuffer mThemeLikeSb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,9 +115,15 @@ public class MainActivity extends BaseActivity {
             String themes = String.valueOf(SPUtils.get(ConstData.THEMES_DATA, ""));
             if (!TextUtils.isEmpty(themes)) {
                 themeDataList = JsonParseUtils.getThemeDatas(themes);
+                if (themeDataList != null && !themeDataList.isEmpty()) {
+                    BaseApplication.themeDataMap.clear();
+                    for (ThemeData themeData : themeDataList) {
+                        BaseApplication.themeDataMap.put(themeData.getThemeId(), themeData);
+                    }
+                }
             }
         }
-        menuAdapter = new DrawerMenuAdapter(this, themeDataList);
+        menuAdapter = new DrawerMenuAdapter(this, themeDataList, BaseApplication.themeLikes);
         mDrawerRecycleView.setAdapter(menuAdapter);
         menuAdapter.setItemClickListner(new DrawerMenuAdapter.OnDrawerItemClickListener() {
             @Override
@@ -124,7 +131,7 @@ public class MainActivity extends BaseActivity {
                 FragmentTransaction fragmentTransaction;
                 switch (view.getId()) {
                     case R.id.top_login_layout:
-                        ToastUtils.showShort(mInstance, "weidengl");
+                        showTipDialog();
                         break;
                     case R.id.top_favorites_layout:
                         ToastUtils.showShort(mInstance, "shoucang");
@@ -164,14 +171,23 @@ public class MainActivity extends BaseActivity {
                             fragmentTransaction.replace(R.id.app_main_container, mThemeFragment).show(mThemeFragment).commit();
                             mCurrentFragment = mThemeFragment;
                             mCurrentTheme = themeData;
-                            invalidateOptionsMenu();
                         }
                         mDrawerLayout.closeDrawers();
                         getSupportActionBar().setTitle(themeData.getThemeName());
                         break;
                     case R.id.bottom_img_layout:
-                        ThemeData themeDatas = (ThemeData) data;
-                        ToastUtils.showShort(mInstance, themeDatas.getThemeId());
+                        ThemeData theme = (ThemeData) data;
+                        if (!BaseApplication.themeLikes.contains(theme.getThemeId())) {
+                            BaseApplication.themeLikes.add(0, theme.getThemeId());
+                        }
+                        menuAdapter.refreshAdapter(themeDataList, BaseApplication.themeLikes);
+                        mThemeLikeSb = new StringBuffer();
+                        for (String str : BaseApplication.themeLikes) {
+                            mThemeLikeSb.append(str).append(",");
+                        }
+                        String themeLikes = mThemeLikeSb.toString();
+                        themeLikes = themeLikes.substring(0, themeLikes.length() - 1);
+                        SPUtils.put(ConstData.THEME_LIKE, themeLikes);
                         break;
                 }
             }
@@ -198,6 +214,16 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 invalidateOptionsMenu();
+                mDrawerLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mCurrentTheme != null) {
+                            menuAdapter.refreshAdapter(mCurrentTheme.getThemeId());
+                        } else {
+                            menuAdapter.refreshAdapter("-1");
+                        }
+                    }
+                }, 1000);
             }
         };
 
@@ -224,6 +250,9 @@ public class MainActivity extends BaseActivity {
             }
         } else {
             getMenuInflater().inflate(R.menu.menu_theme, menu);
+            if (BaseApplication.themeLikes.contains(mCurrentTheme.getThemeId())) {
+                menu.findItem(R.id.action_theme_option).setIcon(R.mipmap.theme_remove);
+            }
         }
         return true;
     }
@@ -234,7 +263,20 @@ public class MainActivity extends BaseActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_theme_option) {
-            showTipDialog();
+            if (BaseApplication.themeLikes.contains(mCurrentTheme.getThemeId())) {
+                BaseApplication.themeLikes.remove(mCurrentTheme.getThemeId());
+            } else {
+                BaseApplication.themeLikes.add(0, mCurrentTheme.getThemeId());
+            }
+            menuAdapter.refreshAdapter(themeDataList, BaseApplication.themeLikes);
+            mThemeLikeSb = new StringBuffer();
+            for (String str : BaseApplication.themeLikes) {
+                mThemeLikeSb.append(str).append(",");
+            }
+            String themeLikes = mThemeLikeSb.toString();
+            themeLikes = themeLikes.substring(0, themeLikes.length() - 1);
+            SPUtils.put(ConstData.THEME_LIKE, themeLikes);
+            invalidateOptionsMenu();
             return true;
         }
         return super.onOptionsItemSelected(item);

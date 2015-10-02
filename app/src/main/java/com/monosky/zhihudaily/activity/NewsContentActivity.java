@@ -471,7 +471,7 @@ public class NewsContentActivity extends BaseActivity {
             float alpha = Math.min(1, (float) scrollY / mParallaxImageHeight);
             mToolbar.setBackgroundColor(ScrollUtils.getColorWithAlpha(1f - alpha, baseColor));
             ViewHelper.setTranslationY(mImageLayout, scrollY / 2);
-            if (alpha > 0.95) {
+            if (alpha >= 1) {
                 if (mToolBarVisible) {
                     mToolbar.setVisibility(View.INVISIBLE);
                     mToolBarVisible = false;
